@@ -1,4 +1,29 @@
 body {
 	display: grid;
-	grid-template-columns: 2fr 8fr
+	grid-template-rows: 20% auto;
+	grid-template-columns: 2fr 8fr;
+	grid-template-areas:
+	"header header"
+	"list main";
+	grid-gap: 10px 10px;
+}
+
+.header-container {
+	grid-area: header;
+}
+
+#list-panel{
+	grid-area: list;
+}
+
+#show-panel{
+	grid-area: main;
+}
+
+li {
+	cursor: pointer;
+}
+
+.header-container {
+	justify-self: center;
 }
