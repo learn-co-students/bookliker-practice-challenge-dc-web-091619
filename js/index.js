@@ -25,7 +25,6 @@ function bookClicked(event) {
   .then(book => showThumbnail(book))
 }
 
-
 function showThumbnail(book) {
   const showPanel = document.getElementById("show-panel")
   showPanel.innerHTML = ""
@@ -70,9 +69,9 @@ function readButtonClicked(event) {
   .then(res => res.json())
   .then(book => {
       if (book.users.map(user => user.id).includes(1)) {
-        alert("You already read this book!")
+        alert("You already read this book!");
       } else {
-      const users = book.users.push({"id":1, "username":"pouros"});
+      book.users.push({"id":1, "username":"pouros"});
       fetch(`http://localhost:3000/books/${bookId}`, {
         method: "PATCH",
         headers: {
@@ -84,7 +83,7 @@ function readButtonClicked(event) {
         })
       })
       .then(res => res.json())
-      .then(book => addUserLi({"id":1, "username":"pouros"}, readersUl))
+      .then(book => addUserLi({"id":1, "username":"pouros"}, readersUl));
       }  
   })
 }
