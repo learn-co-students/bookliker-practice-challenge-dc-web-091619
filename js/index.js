@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-let currentUsers = [];
+// let currentUsers = [];
 
 function addBook(book) {
   const containerUl = document.getElementById("list")
@@ -51,13 +51,13 @@ function showThumbnail(book) {
 
   showPanel.append(title, image, desc, userLiked, readersUl, readButton)
 
-  currentUsers = [];
+  // currentUsers = [];
   book.users.forEach(user => addUserLi(user, readersUl))
 }
 
 function addUserLi(user, readersUl) {
   const userLi = document.createElement("li")
-  currentUsers.push(user)
+  // currentUsers.push(user)
   userLi.innerText = user.username
   readersUl.appendChild(userLi)
 }
@@ -65,21 +65,26 @@ function addUserLi(user, readersUl) {
 function readButtonClicked(event) {
   const readersUl = event.target.previousElementSibling
   const bookId = parseInt(event.target.id.split("-")[1], 10)
-  if (currentUsers.map(user => user.id).includes(1)) {
-    alert("You already read this book!")
-  } else {
-  currentUsers.push({"id":1, "username":"pouros"});
-  fetch(`http://localhost:3000/books/${bookId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({
-      users: currentUsers
-    })
-  })
+
+  fetch(`http://localhost:3000/books/${bookId}`)
   .then(res => res.json())
-  .then(book => addUserLi({"id":1, "username":"pouros"}, readersUl))
-  }
+  .then(book => {
+      if (book.users.map(user => user.id).includes(1)) {
+        alert("You already read this book!")
+      } else {
+      const users = book.users.push({"id":1, "username":"pouros"});
+      fetch(`http://localhost:3000/books/${bookId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          users: book.users
+        })
+      })
+      .then(res => res.json())
+      .then(book => addUserLi({"id":1, "username":"pouros"}, readersUl))
+      }  
+  })
 }
