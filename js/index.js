@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 let currentUsers = [];
 
-
 function addBook(book) {
   const containerUl = document.getElementById("list")
   const bookLi = document.createElement("li")
@@ -18,7 +17,6 @@ function addBook(book) {
   bookLi.innerText = book.title
   bookLi.addEventListener("click", bookClicked)
 }
-
 
 function bookClicked(event) {
   const bookId = event.target.id.split("-")[1]
@@ -57,14 +55,12 @@ function showThumbnail(book) {
   book.users.forEach(user => addUserLi(user, readersUl))
 }
 
-
 function addUserLi(user, readersUl) {
   const userLi = document.createElement("li")
   currentUsers.push(user)
   userLi.innerText = user.username
   readersUl.appendChild(userLi)
 }
-
 
 function readButtonClicked(event) {
   const readersUl = event.target.previousElementSibling
